@@ -17,7 +17,7 @@ PKG_BUILD_DEPENDS:=node/host
 PKG_BUILD_PARALLEL:=1
 PKG_USE_MIPS16:=0
 
-PKG_MAINTAINER:=Zbynek Kocur <zbynek.kocur@fel.cvut.cz>
+PKG_MAINTAINER:=Zbynek Kocur <zokl@atlas.cz>
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE
 
