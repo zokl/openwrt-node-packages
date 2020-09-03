@@ -6,12 +6,12 @@ include $(TOPDIR)/rules.mk
 
 PKG_NPM_NAME:=homebridge-camera-ffmpeg
 PKG_NAME:=node-$(PKG_NPM_NAME)
-PKG_VERSION:=3.0.1
+PKG_VERSION:=3.0.3
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NPM_NAME)-$(PKG_VERSION).tgz
 PKG_SOURCE_URL:=https://registry.npmjs.org/$(PKG_NPM_NAME)/-/
-PKG_HASH:=8901acba1d089eba75b364fce0ac655986f9849ecee191c65754fb104c425c2c
+PKG_HASH:=0b39f7e20d2986453d800d63995a5dfc3e4b3c2b788c34f8f5142181380d8f9b
 
 PKG_BUILD_DEPENDS:=node/host
 HOST_BUILD_PARALLEL:=1
@@ -29,36 +29,7 @@ define Package/$(PKG_NAME)
   CATEGORY:=Languages
   TITLE:=homebridge camera ffmpeg
   URL:=https://www.npmjs.org/package/homebridge-camera-ffmpeg
-  DEPENDS:= \
-	+node \
-	+node-homebridge \
-	+libffmpeg-custom \
-	+@FFMPEG_CUSTOM_GPL\
-	+@FFMPEG_CUSTOM_GPLV3 \
-	+@FFMPEG_CUSTOM_NONFREE \
-	+@FFMPEG_CUSTOM_PATENTED \
-	+@FFMPEG_CUSTOM_LARGE \
-	+@FFMPEG_CUSTOM_PROGRAMS \
-	+@FFMPEG_CUSTOM_ENCODER_jpegls\
-	+@FFMPEG_CUSTOM_ENCODER_png \
-	+@FFMPEG_CUSTOM_SELECT_libfdk-aac \
-	+@FFMPEG_CUSTOM_SELECT_libmp3lame \
-	+@FFMPEG_CUSTOM_SELECT_libopus \
-	+@FFMPEG_CUSTOM_SELECT_libx264 \
-	+@FFMPEG_CUSTOM_DECODER_hevc \
-	+@FFMPEG_CUSTOM_DECODER_jpegls \
-	+@FFMPEG_CUSTOM_DECODER_png \
-	+@FFMPEG_CUSTOM_DECODER_amrnb \
-	+@FFMPEG_CUSTOM_DECODER_amrwb \
-	+@FFMPEG_CUSTOM_DEMUXER_amr \
-	+@FFMPEG_CUSTOM_DEMUXER_hevc \
-	+@FFMPEG_CUSTOM_DEMUXER_rtsp \
-	+@FFMPEG_CUSTOM_PARSER_h264 \
-	+@FFMPEG_CUSTOM_PROTOCOL_file \
-	+@FFMPEG_CUSTOM_PROTOCOL_http \
-	+@FFMPEG_CUSTOM_PROTOCOL_pipe \
-	+@FFMPEG_CUSTOM_PROTOCOL_rtp \
-	+@FFMPEG_CUSTOM_PROTOCOL_tcp
+  DEPENDS:= +node +node-homebridge
 endef
 
 define Package/$(PKG_NAME)/description
@@ -92,6 +63,7 @@ define Package/$(PKG_NAME)/install
                 $(1)/usr/lib/node_modules/$(PKG_NPM_NAME)
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/node_modules/$(PKG_NPM_NAME)/{dist,node_modules} \
                 $(1)/usr/lib/node_modules/$(PKG_NPM_NAME)
+	$(RM) -r  $(1)/usr/lib/node_modules/$(PKG_NPM_NAME)/node_modules/ffmpeg-for-homebridge
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))

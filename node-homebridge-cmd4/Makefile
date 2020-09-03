@@ -6,12 +6,12 @@ include $(TOPDIR)/rules.mk
 
 PKG_NPM_NAME:=homebridge-cmd4
 PKG_NAME:=node-$(PKG_NPM_NAME)
-PKG_VERSION:=2.3.2
+PKG_VERSION:=2.4.0
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NPM_NAME)-$(PKG_VERSION).tgz
 PKG_SOURCE_URL:=https://registry.npmjs.org/$(PKG_NPM_NAME)/-/
-PKG_HASH:=86a4075948c16a81da00820981d43faffcede2d52b65d895de9b024ae8fa6fd9
+PKG_HASH:=a3267e202485fd90263c3cf78d258a4cc5787a80e05ca156f2c41da1b74fb857
 
 PKG_BUILD_DEPENDS:=node/host
 PKG_BUILD_PARALLEL:=1
@@ -63,6 +63,9 @@ define Package/$(PKG_NAME)/install
 		$(1)/usr/lib/node_modules/$(PKG_NPM_NAME)
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/node_modules/$(PKG_NPM_NAME)/{node_modules,Extras} \
 		$(1)/usr/lib/node_modules/$(PKG_NPM_NAME)
+	$(RM) -r $(1)/usr/lib/node_modules/$(PKG_NPM_NAME)/node_modules/system-sleep
+	$(RM) -r $(1)/usr/lib/node_modules/$(PKG_NPM_NAME)/node_modules/deasync-promise
+	$(RM) -r $(1)/usr/lib/node_modules/$(PKG_NPM_NAME)/node_modules/deasync
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
