@@ -61,12 +61,11 @@ define Build/Compile
 endef
 
 define Package/node-system-sleep/install
-	$(INSTALL_DIR) $(1)/usr/lib/node/$(PKG_NPM_NAME)
+	$(INSTALL_DIR) $(1)/usr/lib/node_modules/$(PKG_NPM_NAME)
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/node_modules/$(PKG_NPM_NAME)/package.json \
-		$(1)/usr/lib/node/$(PKG_NPM_NAME)/
+		$(1)/usr/lib/node_modules/$(PKG_NPM_NAME)/
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/node_modules/$(PKG_NPM_NAME)/{*.md,*.js} \
-		$(1)/usr/lib/node/$(PKG_NPM_NAME)/
-	$(RM) -r $(1)/usr/lib/node_modules/$(PKG_NPM_NAME)/node_modules/deasync-promise
+		$(1)/usr/lib/node_modules/$(PKG_NPM_NAME)/
 endef
 
 $(eval $(call BuildPackage,node-system-sleep))
