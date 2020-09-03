@@ -4,14 +4,14 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NPM_NAME:=homebridge-cmd4
+PKG_NPM_NAME:=deasync
 PKG_NAME:=node-$(PKG_NPM_NAME)
-PKG_VERSION:=2.4.0
+PKG_VERSION:=0.1.20
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NPM_NAME)-$(PKG_VERSION).tgz
 PKG_SOURCE_URL:=https://registry.npmjs.org/$(PKG_NPM_NAME)/-/
-PKG_HASH:=a3267e202485fd90263c3cf78d258a4cc5787a80e05ca156f2c41da1b74fb857
+PKG_HASH:=827c2b31f266602c0abd6cf009cd1c8a0ece743c121fc8b75c76a2eef1dc4147
 
 PKG_MAINTAINER:=Hirokazu MORIKAWA <morikw2@gmail.com>
 PKG_LICENSE:=MIT
@@ -23,17 +23,17 @@ PKG_USE_MIPS16:=0
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/node-homebridge-cmd4
+define Package/node-deasync
   SUBMENU:=Node.js
   SECTION:=lang
   CATEGORY:=Languages
-  TITLE:=Exec Plugin for Homebridge supporting all
-  URL:=https://www.npmjs.com/package/homebridge-cmd4
-  DEPENDS:=+node +node-homebridge +node-system-sleep
+  TITLE:=DeAsync turns async function into sync
+  URL:=https://www.npmjs.com/package/deasync
+  DEPENDS:=+node
 endef
 
-define Package/node-homebridge-cmd4/description
- Cmd4 is a plugin for Homebridge that lets you see what Homebridge and Homekit are all about, without actually owning a single accessory! For the more advanced user, Cmd4 brings CLI support for all device types (Accessories) and characteristics.
+define Package/node-deasync/description
+ DeAsync turns async function into sync, implemented with a blocking mechanism by calling Node.js event loop at JavaScript layer. The core of deasync is writen in C++.
 endef
 
 TAR_OPTIONS+= --strip-components 1
@@ -46,6 +46,7 @@ TARGET_CFLAGS+=$(FPIC)
 TARGET_CPPFLAGS+=$(FPIC)
 
 define Build/Compile
+	rm -rf $(PKG_BUILD_DIR)/bin
 	$(MAKE_VARS) \
 	$(MAKE_FLAGS) \
 	npm_config_arch=$(NODEJS_CPU) \
@@ -60,17 +61,17 @@ define Build/Compile
 	rm -rf $(TMP_DIR)/npm-cache-$(TMPNPM)
 endef
 
-define Package/node-homebridge-cmd4/install
-	$(INSTALL_DIR) $(1)/usr/lib/node_modules/$(PKG_NPM_NAME)
+define Package/node-deasync/install
+	$(INSTALL_DIR) $(1)/usr/lib/node/$(PKG_NPM_NAME)
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/node_modules/$(PKG_NPM_NAME)/{package.json,LICENSE} \
-		$(1)/usr/lib/node_modules/$(PKG_NPM_NAME)/
+		$(1)/usr/lib/node/$(PKG_NPM_NAME)/
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/node_modules/$(PKG_NPM_NAME)/{README.md,*.js} \
-		$(1)/usr/lib/node_modules/$(PKG_NPM_NAME)/
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/node_modules/$(PKG_NPM_NAME)/{node_modules,Extras} \
-		$(1)/usr/lib/node_modules/$(PKG_NPM_NAME)/
-	$(RM) -r $(1)/usr/lib/node_modules/$(PKG_NPM_NAME)/node_modules/system-sleep
-	$(RM) -r $(1)/usr/lib/node_modules/$(PKG_NPM_NAME)/node_modules/deasync-promise
-	$(RM) -r $(1)/usr/lib/node_modules/$(PKG_NPM_NAME)/node_modules/deasync
+		$(1)/usr/lib/node/$(PKG_NPM_NAME)/
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/node_modules/$(PKG_NPM_NAME)/{node_modules,spec} \
+		$(1)/usr/lib/node/$(PKG_NPM_NAME)/
+	$(INSTALL_DIR) $(1)/usr/lib/node/$(PKG_NPM_NAME)/build/Release
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/node_modules/$(PKG_NPM_NAME)/build/Release/obj.target/deasync.node \
+		$(1)/usr/lib/node/$(PKG_NPM_NAME)/build/Release/
 endef
 
-$(eval $(call BuildPackage,node-homebridge-cmd4))
+$(eval $(call BuildPackage,node-deasync))
