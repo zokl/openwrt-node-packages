@@ -29,7 +29,7 @@ define Package/$(PKG_NAME)
   CATEGORY:=Languages
   TITLE:=homebridge camera ffmpeg
   URL:=https://www.npmjs.org/package/homebridge-camera-ffmpeg
-  DEPENDS:= +node +node-homebridge
+  DEPENDS:= +node +node-homebridge +ffmpeg
 endef
 
 define Package/$(PKG_NAME)/description
