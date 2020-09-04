@@ -63,7 +63,7 @@ define Package/$(PKG_NAME)/install
                 $(1)/usr/lib/node_modules/$(PKG_NPM_NAME)
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/node_modules/$(PKG_NPM_NAME)/{dist,node_modules} \
                 $(1)/usr/lib/node_modules/$(PKG_NPM_NAME)
-	$(RM) -r  $(1)/usr/lib/node_modules/$(PKG_NPM_NAME)/node_modules/ffmpeg-for-homebridge
+	$(RM) -r  $(1)/usr/lib/node_modules/$(PKG_NPM_NAME)/node_modules/ffmpeg-for-homebridge/ffmpeg
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
